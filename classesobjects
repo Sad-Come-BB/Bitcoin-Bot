@@ -1,0 +1,66 @@
+@dataclass
+class Period:
+    timestamp: int = None
+    open: float = None
+    high: float = None
+    low: float = None
+    close: float = None
+    mid: float = None
+    avg: float = None
+
+
+
+class Patterncheck:
+  def __init__(slope, current):
+    slope.currnet = current
+
+  f = open("Binance_BTCUSDT_1h.csv")
+  data = f.readlines()[2:5]
+  f.close()
+  up = 0
+  down = 0
+  
+  for line in reversed(data):
+    segments = line.split(",")
+    period = Period()
+    period.open = float(segments[3])
+    period.close = float(segments[6])
+    slope = (period.open-period.close)
+    
+    #read the next line, fuck you should know how to do this 
+    segments = line.split(",")
+    period = Period()
+    period.newclose = float(segments[6])
+    if (period.close-0.05 < current < period.close+0.05) && current < (period.close-period.newclose):
+        down++
+    if (period.close-0.05 < current < period.close+0.05) && current > (period.close-period.newclose):
+        up++
+
+  if up == down:
+    x = #get random
+    if x<.5:
+      return ("UP")
+    elif x>.5:
+      return ("DOWN")
+  elif up > down:
+    return ("UP")
+  elif down > up:
+    return ("DOWN")
+
+
+@endpoint.update_handler
+def on_update(coin, price):
+  if (coin == trading.BTC && time%60mins == 0):
+    print (coin,price)
+    old = price
+        # wait 15mins
+    new ==price
+    print (old)
+         
+    newslope = (new-old)/0.25
+  
+  vote = Patterncheck(newslope)
+  if vote == "UP":
+    up()
+  if vote == "DOWN":
+    down()

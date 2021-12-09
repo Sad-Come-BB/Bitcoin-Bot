@@ -1,0 +1,18 @@
+I did this very quickly.
+If there are bugs, I will send you a patch.
+
+See example Python code in example.py
+
+YOU MUST DO THE FOLLOWING!
+
+You must include trading.py in the same directory as your main program.
+
+IMPORTANT!
+
+My library allows you to bet on the price going up or down, check your account balance, and query which side of the trade you are currently on.
+The website also gives you updates on the current prices observed by the website.
+However, if you want more complex analysis of price data, it is recommended to use another service (such as Binance).
+It is recommended that you gather crypto-related data for analysis from sources of your choosing, e.g. the Binance API.
+The sources you choose will of course be based on/influenced by your personal trading strategy.
+
+ANY QUESTIONS OR PROBLEMS LET ME KNOW!
