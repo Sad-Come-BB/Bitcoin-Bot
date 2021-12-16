@@ -1,3 +1,6 @@
+import time 
+import datetime
+
 @dataclass
 class Period:
     timestamp: int = None
@@ -9,9 +12,9 @@ class Period:
     avg: float = None
 
 
-
+# NOT how you should do it
 class Patterncheck:
-  def __init__(slope, current):
+  def _init_(slope, current):
     slope.currnet = current
 
   f = open("Binance_BTCUSDT_1h.csv")
@@ -37,11 +40,7 @@ class Patterncheck:
         up++
 
   if up == down:
-    x = #get random
-    if x<.5:
-      return ("UP")
-    elif x>.5:
-      return ("DOWN")
+    return ("DOWN")
   elif up > down:
     return ("UP")
   elif down > up:
@@ -50,17 +49,35 @@ class Patterncheck:
 
 @endpoint.update_handler
 def on_update(coin, price):
-  if (coin == trading.BTC && time%60mins == 0):
+  if (coin == trading.BTC):
     print (coin,price)
     old = price
-        # wait 15mins
+    time.sleep(300)
     new ==price
     print (old)
          
-    newslope = (new-old)/0.25
-  
+    newslope = (new-old)/(1/6)
+    
+  #vote = init(newslope)
   vote = Patterncheck(newslope)
   if vote == "UP":
     up()
   if vote == "DOWN":
     down()
+  time.sleep(300)
+
+first_price_time = time.time()
+first_price = None
+
+@sdffdfsdf
+def on_update(coin, price):
+  if it is bitcoin:
+    if first_price == None:
+      first_price = price
+
+    current_time = time.time()
+    dt = current_time - first_price_time
+    if dt > 300:
+      first_price_time = current_time
+      change_in_price = price - first_price
+      percentage = change_in_price / first_price 

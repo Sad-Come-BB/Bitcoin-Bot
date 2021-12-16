@@ -68,9 +68,9 @@ def checkpattern(newprecent):
         period.newclose = float(next_segments[6])
         idk = (period.close-period.newclose)/(period.close)
         #change to precentages, close-open/open
-        if (old_precent-0.005 < newprecent < old_precent+0.005) and newprecent < (idk):
+        if (old_precent-0.001 < newprecent < old_precent+0.001) and newprecent < (idk):
             down+=1
-        if (old_precent-0.005 < newprecent < old_precent+0.005) and newprecent > (idk):
+        if (old_precent-0.001 < newprecent < old_precent+0.001) and newprecent > (idk):
             up+=1
     print ("down:", down)
     print ("up:", up)  
@@ -95,7 +95,7 @@ def on_update(coin, price):
     current_time = time.time()
     dt = current_time - first_price_time
     
-    if dt > 5:
+    if dt > 60:
         first_price_time = current_time
         change_in_price = price - first_price
         percentage = (change_in_price / first_price)
