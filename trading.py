@@ -108,16 +108,16 @@ class TradingEndpoint:
         if self._handle_update == None:
             raise "You need to register an update_handler to avail of this function. Please see my example code."
         
-        coin, usd = self.balance(coin)
-        return coin * self._current_prices[coin] + usd
+        coin_bal, usd = self.balance(coin)
+        return coin_bal * self._current_prices[coin] + usd
 
-    def unrealized_balance_btc(self, coin):
+    def unrealized_balance_btc(self):
         return self.unrealized_balance(BTC)
 
-    def unrealized_balance_eth(self, coin):
+    def unrealized_balance_eth(self):
         return self.unrealized_balance(ETH)
 
-    def unrealized_balance_doge(self, coin):
+    def unrealized_balance_doge(self):
         return self.unrealized_balance(DOGE)
 
     def update_handler(self, handler):
@@ -129,7 +129,13 @@ class TradingEndpoint:
         async def listen():
             async with websockets.connect(WS_URL) as ws:
                 while not self._is_destroying:
-                    response = await ws.recv()
+                    try:
+                        response = await ws.recv()
+                    except Exception as e:
+                        print(e)
+                        print("David's garbage websockets had an error, reconnecting...")
+                        asyncio.run(listen())
+                        break
                     if self._is_destroying:
                         break
                     data = json.loads(response)

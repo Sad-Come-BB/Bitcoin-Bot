@@ -26,7 +26,8 @@ btc, usd = endpoint.balance_btc()
 
 # If you want to calculate your balance as if it was all in usd (unrealized balance) you can do it like so:
 # It is recommended to run the following line of code inside an update_handler as described at the end of this file, otherwise there may be an error.
-usd = endpoint.unrealized_balance()
+usd = endpoint.unrealized_balance(trading.BTC)
+usd = endpoint.unrealized_balance_btc()
 
 # You can use either of the following to figure out what direction you are currently betting for a certain coin.
 side = endpoint.get(trading.BTC)

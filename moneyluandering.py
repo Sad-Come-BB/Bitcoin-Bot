@@ -1,15 +1,5 @@
-#Clock to determine the opening price for today and the current price, Store these values in the csv, if you can
-#https://www.investopedia.com/terms/t/technicalanalysis.asp
-#    Look at price, compare opening and closing and compare today's opening and current price (in hrs!!)
-#    Look at Chart patterns [DONE!!!, ish]
-#    Look at Volume and momentum indicators
 #    Look at Oscillators   [do this next??]
-#    Look at Moving averages
-#    Look at Support and resistance levels
-#    Good luck
-#    Wesockets, and things stops runing
 import time 
-import datetime
 import trading
 from dataclasses import dataclass
 
@@ -25,7 +15,7 @@ class Period:
     mid: float = None
     avg: float = None
 
-endpoint = trading.login("Levis", "LevisT")
+endpoint = trading.login("CS225LevisT", "levis")
 
 btc, myprice = endpoint.balance_btc()
 side = endpoint.get_btc()
@@ -48,8 +38,7 @@ data = f.readlines()[2:]
 f.close()
 
 
-# NOT how you should do it
-#figure it out dumbo
+
 def checkpattern(newprecent):
     up = 0
     down = 0
@@ -62,21 +51,20 @@ def checkpattern(newprecent):
         period.open = float(segments[3])
         period.close = float(segments[6])
         old_precent = (period.open-period.close)/(period.open)
-        # or do this again and store it
-        #read the next line, fuck you should know how to do this
+       
         next_segments = nextline.split(",")
         period.newclose = float(next_segments[6])
         idk = (period.close-period.newclose)/(period.close)
         #change to precentages, close-open/open
-        if (old_precent-0.001 < newprecent < old_precent+0.001) and newprecent < (idk):
+        if (old_precent-0.0009 < newprecent < old_precent+0.0009) and newprecent < (idk):
             down+=1
-        if (old_precent-0.001 < newprecent < old_precent+0.001) and newprecent > (idk):
+        if (old_precent-0.0009 < newprecent < old_precent+0.0009) and newprecent > (idk):
             up+=1
     print ("down:", down)
     print ("up:", up)  
     print ("checked csv file")
     if up == down:
-        return "gay"
+        return "null"
     if up > down:
         return "UP"
     elif down > up:
@@ -95,7 +83,7 @@ def on_update(coin, price):
     current_time = time.time()
     dt = current_time - first_price_time
     
-    if dt > 60:
+    if dt > 45:
         first_price_time = current_time
         change_in_price = price - first_price
         percentage = (change_in_price / first_price)
@@ -108,7 +96,7 @@ def on_update(coin, price):
         if vote == "DOWN":
             down()
             print ("voted down")
-        if vote == "gay":
+        if vote == "null":
             side = endpoint.get_btc()
             if side == "up":
                 up()
